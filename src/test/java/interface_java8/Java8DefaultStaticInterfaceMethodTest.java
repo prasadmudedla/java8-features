@@ -1,25 +1,37 @@
 package interface_java8;
 
 /*
-
     Before Java 8, interfaces could have only public abstract methods.
     It was not possible to add new functionality to the existing interface without forcing all implementing classes
         to create an implementation of the new methods, nor it was possible to create interface methods with an implementation.
 
     Starting with Java 8, interfaces can have static and default methods that,
         despite being declared in an interface, have a defined behavior.
-
  */
 
-public class InterfaceTest
-{
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class Java8DefaultStaticInterfaceMethodTest {
+
     /*
         Static Method
             -> The static producer() method is available only through and inside an interface.
                 It can't be overridden by an implementing class.
             -> To call it outside the interface the standard approach for static method call should be used:
     */
-    String producer = Vehicle.producer();
+    @Test
+    public void callInterfaceStaticMethodTest() {
+        Vehicle vehicle = new VehicleImpl();
+        String overview = vehicle.getOverview();
+
+        long[] startPosition = vehicle.startPosition();
+
+        assertEquals(overview, "ATV made by N&F Vehicles");
+        assertEquals(startPosition[0], 23);
+        assertEquals(startPosition[1], 15);
+    }
 
 
     /*
@@ -29,9 +41,9 @@ public class InterfaceTest
         Assume that this interface is implemented by the class VehicleImpl.
             For executing the default method an instance of this class should be created:
     */
-    Vehicle vehicle = new VehicleImpl();
-    String overView = vehicle.getOverview();
-
+    @Test
+    public void callInterfaceDefaultMethodTest() {
+        String producer = Vehicle.producer();
+        assertEquals(producer, "N&F Vehicles");
+    }
 }
-
-
